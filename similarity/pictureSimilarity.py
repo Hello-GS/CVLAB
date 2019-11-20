@@ -96,21 +96,10 @@ def write_hash_feature(pic_size, label):
                '对应路径为disk/11712504/fuck/similarity' + target_file)
 
 
+
+
 if __name__ == '__main__':
     read_config()
     hashCalculator = HashCalculator()
     write_hash_feature(pic_size=pic_length, label=0)
     write_hash_feature(pic_size=pic_length, label=1)
-
-
-
-
-
-
-
-
-
-
-
-
-
