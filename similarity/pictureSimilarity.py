@@ -101,3 +101,16 @@ if __name__ == '__main__':
     hashCalculator = HashCalculator()
     write_hash_feature(pic_size=pic_length, label=0)
     write_hash_feature(pic_size=pic_length, label=1)
+
+
+
+
+
+
+
+
+
+
+
+
+
