@@ -3,63 +3,60 @@ import math
 import cv2
 
 input_path = '/disk/data/total_incident/'
-pic_length = 256
 
 
-def calculate_angle(i, j):
-    if i == 0 and j == 0:
-        return 0
-    print(i, j)
-    x = i - 127
-    y = j - 127
-    if y < 0:
-        return 360 - math.acos(x / math.sqrt(x * x + y * y)) / math.pi * 180
-    elif y == 0:
-        if x > +0:
+class angleHashCalculator():
+    pic_length = 512
+    list = [[[] for j in range(256)] for i in range(36)]
+
+    def calculate_angle(self, i, j):
+        if i == 0 and j == 0:
             return 0
-        else:
-            return 180
+        x = i - self.pic_length / 2 - 1
+        y = j - self.pic_length / 2 - 1
+        if y < 0:
+            return 360 - math.acos(x / math.sqrt(x * x + y * y)) / math.pi * 180
+        elif y == 0:
+            if x > +0:
+                return 0
+            else:
+                return 180
+        return math.acos(x / math.sqrt(x * x + y * y)) / math.pi * 180
 
-    return math.acos(x / math.sqrt(x * x + y * y)) / math.pi * 180
+    def calculate_dest(self, i, j):
+        return int(math.sqrt(
+            abs(i - self.pic_length / 2) * abs(i - self.pic_length / 2) + abs(j - self.pic_length / 2) * abs(
+                j - self.pic_length / 2)))
 
+    def __init__(self, pic_length):
+        self.pic_length = pic_length
+        self.list = [[[] for j in range(int(pic_length / 2))] for i in range(36)]
+        for i in range(pic_length):
+            for j in range(pic_length):
+                angel_level = int(self.calculate_angle(i, j) / 10)
+                distance_level = int(self.calculate_dest(i, j))
+                if distance_level >= pic_length / 2:
+                    continue
+                self.list[angel_level][distance_level].append((i, j))
 
-def calculate_dest(i, j):
-    return abs(i - 127) * abs(i - 127) + abs(j - 127) * abs(j - 127)
-
-
-list = [[[] for j in range(5)] for i in range(36)]
-
-
-def calculateAngle(fs):
-    im = cv2.imread(fs, 0)
-    im = cv2.resize(im, (pic_length, pic_length))
-    gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    for x in range(256):
-        for y in range(256):
-            if (128 - x) * (128 - x) + (128 - y) * (128 - y) <= 128 * 128:
-                angle = int(calculate_angle(x, y) / 10)
-                dist = calculate_dest(x, y)
-                if dist < 1352:
-                    list[angle][0].append(int(gray[x, y] / 8))
-                elif dist < 5408:
-                    list[angle][1].append(int(gray[x, y] / 8))
-                elif dist < 12168:
-                    list[angle][2].append(int(gray[x, y] / 8))
-                elif dist < 21632:
-                    list[angle][3].append(int(gray[x, y] / 8))
-                else:
-                    list[angle][4].append(int(gray[x, y] / 8))
-    hash_number = []
-    for i in range(36):
-        for j in range(5):
-            sum = 0
-            for k in range(len(list[i][j])):
-                sum += list[i][j][k]
-            hash_number.append(int(sum / len(list[i][j])))
-    print(hash_number)
-
+    def calculateHash(self, fs):
+        fs = cv2.imread(fs)
+        img = cv2.resize(fs, (self.pic_length, self.pic_length))
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        ans_hash = ''
+        for i in self.list:
+            for j in i:
+                if not j:
+                    continue
+                sum = 0
+                for x, y in j:
+                    sum += gray[x, y]
+                hash_code = str(int(sum / len(j) / 32))
+                ans_hash += hash_code
+        return ans_hash
 
 
 if __name__ == '__main__':
-    fs = '/disk/data/total_incident/1/CME20011104163506/20011104_1848_c2_1024.jpg'
-    calculateAngle(fs)
+    fs = './20050108_1630_c2_1024.jpg'
+    caculator = angleHashCalculator(512)
+    print(caculator.calculateHash(fs))
