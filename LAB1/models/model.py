@@ -33,6 +33,7 @@ class GeM(nn.Module):
 
 def get_model():
     if configs.model_name.startswith("resnext50_32x4d"):
+
         model = tm.resnext50_32x4d(pretrained=True)
         model.avgpool = nn.AdaptiveAvgPool2d(1)
         model.fc = nn.Linear(2048,configs.num_classes)
@@ -40,6 +41,7 @@ def get_model():
     elif configs.model_name.startswith("efficient"):
         # efficientNet
         model_name = configs.model_name[:15]
+
         model = EfficientNet.from_name(model_name)
         model.load_state_dict(torch.load(weights[model_name]))
         in_features = model._fc.in_features
@@ -50,17 +52,21 @@ def get_model():
                          )
         model.cuda()
     else:
+
         # pretrained = "imagenet+5k" if configs.model_name.startswith("dpn") else "imagenet"
         pretrained = "imagenet" if configs.model_name.startswith("dpn") else "imagenet"
         # if configs.model_name.startswith("dconvresnet"):
         #     model = ResNet()
         # else:
         if not configs.model_name.startswith("dconvresnet"):
+
             model = pretrainedmodels.__dict__[configs.model_name.split("-model")[0]](num_classes=1000, pretrained=pretrained)
         if configs.model_name.startswith("pnasnet"):
+
             model.last_linear = nn.Linear(4320, configs.num_classes)
             model.avg_pool = nn.AdaptiveAvgPool2d(1)
         elif configs.model_name.startswith("inception"):
+
             model.last_linear = nn.Linear(1536, configs.num_classes)
             model.avgpool_1a  = nn.AdaptiveAvgPool2d(1)           
         elif configs.model_name.startswith("resnet34") or configs.model_name.startswith("resnet18"):

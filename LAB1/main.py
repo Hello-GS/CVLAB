@@ -135,7 +135,7 @@ def main():
         val_dataset = WeatherDataset(val_files,transform_val)
     train_loader = torch.utils.data.DataLoader(
         # train_dataset, batch_size=configs.bs, shuffle=True,
-        train_dataset, batch_size=configs.bs, shuffle=False,
+        train_dataset, batch_size=configs.bs, shuffle=True,
         num_workers=configs.workers, pin_memory=True,
     )
     val_loader = torch.utils.data.DataLoader(
@@ -143,8 +143,10 @@ def main():
         num_workers=configs.workers, pin_memory=True
     )    
     # get model
+
     model = get_model()
     model.cuda()
+
     # choose loss func,default is CE
     if configs.loss_func == "LabelSmoothCE":
         criterion = LabelSmoothingLoss(0.1, configs.num_classes).cuda()
