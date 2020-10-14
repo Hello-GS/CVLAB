@@ -127,12 +127,15 @@ def main():
         val_dataset = WeatherDataset(val_files,transform_val)
     else:
         # use offline split dataset
-        train_files = get_files(configs.dataset+"/train/","train")
-        val_files = get_files(configs.dataset+"/test/","train")
+        # train_files = get_files(configs.dataset+"/train/","train")
+        # val_files = get_files(configs.dataset+"/test/","train")
+        train_files = get_files(configs.dataset+"/", "train")
+        val_files = get_files(configs.dataset+"/", "train")
         train_dataset = WeatherDataset(train_files,transform_train)
         val_dataset = WeatherDataset(val_files,transform_val)
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=configs.bs, shuffle=True,
+        # train_dataset, batch_size=configs.bs, shuffle=True,
+        train_dataset, batch_size=configs.bs, shuffle=False,
         num_workers=configs.workers, pin_memory=True,
     )
     val_loader = torch.utils.data.DataLoader(
@@ -370,7 +373,10 @@ def validate(val_loader, model, criterion, epoch):
         i = str(i.numpy()[0])
         if i not in ["0", "1"]:
             print(i)
+    print(all_targets)
+    print(all_pred)
     metric_result = classification_report(all_targets, all_pred, target_names=['0', '1'], output_dict=True)
+    # metric_result = classification_report(all_targets, all_pred, target_names=['0', '1'])
     # score = 0.2 * metric_result["0"]["f1-score"] + 0.2 * metric_result["1"]["f1-score"] + 0.6 * metric_result["2"]["f1-score"]
     val_f1 = metric_result["1"]["f1-score"]
     val_rec = metric_result["1"]["recall"]
