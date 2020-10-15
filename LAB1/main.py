@@ -266,6 +266,7 @@ def train(train_loader, model, criterion, optimizer, epoch):
         inputs, targets = torch.autograd.Variable(inputs), torch.autograd.Variable(targets)
 
         # compute output
+        print(type(inputs))
         outputs = model(inputs)
         loss = criterion(outputs, targets)
         
@@ -389,4 +390,5 @@ def validate(val_loader, model, criterion, epoch):
     return (losses.avg, top1.avg, top5.avg, "%.6f" % val_f1, "%.6f" % val_rec, "%.6f" % val_prec)
 
 if __name__ == '__main__':
+    torch.backends.cudnn.benchmark = True
     main()

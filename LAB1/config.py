@@ -43,13 +43,13 @@ class DefaultConfigs(object):
     log_dir = "./logs/fuxian"                   # path to save log files
     # log_dir = "./logs/resnext101_32x4d"
     submits = "./submits/"                # path to save submission files
-    bs = 64               # batch size
+    bs = 32  #64 begin               # batch size
     lr = 1e-2             # learning rate
     epochs = 40           # train epochs
     input_size = (512, 512)      # model input size or image resied
     num_classes = 2       # num of classes
     dropout = 0
-    gpu_id = "1"          # default gpu id
+    gpu_id = "2"          # default gpu id
     # model_name = "dconvresnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_imgnetmean_cropdiff" 
     model_name = "inceptionv4-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_mymean_cropfuxian"      # model name to use # onlykeyframe
     optim = "sgd"        # "adam","radam","novograd",sgd","ranger","ralamb","over9000","lookahead","lamb"
