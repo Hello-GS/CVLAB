@@ -5,14 +5,32 @@ import numpy as np
 from PIL import Image
 import requests
 from io import BytesIO
+import yagmail
 import matplotlib
 import matplotlib.pyplot as plt
 
 input_path = '/disk/data/total_incident/'
-output_path = './output_256_label0.txt'
-output_path2 = './output_256_label1.txt'
+output_path_label0 = './output_256_label0.txt'
+output_path_label1 = './output_256_label1.txt'
 user, password, receiver, host = '', '', [], ''
 pic_length = 256
+
+
+def read_config():
+    config = configparser.ConfigParser()
+    config.read('./config.ini')
+    global user, password, receiver, input_path, output_path_label0,output_path_label1, host
+    input_path = config.get('data', 'data_path')
+    output_path_label0 = config.get('data', 'output_path_label0')
+    output_path_label1 = config.get('data', 'output_path_label1')
+    user = config.get('email', 'user')
+    password = config.get('email', 'password')
+    receiver = config.get('email', 'receiver').split(',')
+    host = config.get('email', 'host')
+
+
+def send_email(title, content):
+    yagmail.SMTP(user=user, password=password, host=host).send(receiver, title, content)
 
 
 def aHash(img):
@@ -58,7 +76,9 @@ def get_thum(image, size=(256, 256), greyscale=False):
 
 
 if __name__ == '__main__':
-    output = open(output_path, 'r+')
+    read_config()
+    # send_email('结果',output_path_label0)
+    output = open(output_path_label0, 'r+')
     flies = os.listdir(input_path + '0/')
     count = 0
     for file in flies:
@@ -71,7 +91,7 @@ if __name__ == '__main__':
             count += 1
             if count % 1000 == 0:
                 print("has finish" + str(count))
-    output = open(output_path2, 'r+')
+    output = open(output_path_label1, 'r+')
     flies = os.listdir(input_path + '1/')
     for file in flies:
         if file == '.DS_Store':
@@ -83,4 +103,3 @@ if __name__ == '__main__':
             count += 1
             if count % 1000 == 0:
                 print("has finish" + str(count))
-
