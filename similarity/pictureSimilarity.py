@@ -19,7 +19,7 @@ pic_length = 256
 def read_config():
     config = configparser.ConfigParser()
     config.read('./config.ini')
-    global user, password, receiver, input_path, output_path_label0,output_path_label1, host
+    global user, password, receiver, input_path, output_path_label0, output_path_label1, host
     input_path = config.get('data', 'data_path')
     output_path_label0 = config.get('data', 'output_path_label0')
     output_path_label1 = config.get('data', 'output_path_label1')
@@ -46,7 +46,8 @@ def aHash(img):
     # 遍历累加求像素和
     for i in range(pic_length):
         for j in range(pic_length):
-            hash_str += str(int(gray[i, j] / 32))
+            if (128 - i) * (128 - i) + (128 - j) * (128 - j) <= 128 * 128:
+                hash_str += str(int(gray[i, j] / 32))
     return hash_str
 
 
