@@ -4,7 +4,6 @@ import numpy as np
 import yagmail
 
 input_path = '/disk/data/total_incident/'
-
 output_path_fre = ''
 output_path_post = ''
 user, password, receiver, host = '', '', [], ''
@@ -151,7 +150,7 @@ if __name__ == '__main__':
     print('read path finish,length =', len(path_list))
     for t in range(1000):
         if t == 999:
-            send_email('匹配结果完成' + str(t), result_path)
+            send_email('匹配结果完成' + str(t), result_path.removeprefix('./'))
         random = np.random.randint(0, len(path_list) - 1)
         path = path_list[random]
         img = cv2.imread(path)
