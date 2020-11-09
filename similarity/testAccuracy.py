@@ -129,6 +129,8 @@ def match(label_list):
 def calculate_answer(size, pre_ans):
     answer = 99999999999999999
     answer_path = ''
+    if len(pre_ans) == 1:
+        return pre_ans[0]
     for candidate in pre_ans:
         cur_pic = cv2.imread(candidate)
         cur_hash = hashCalculator.aHash(test_pic=cur_pic, pic_size=size)
