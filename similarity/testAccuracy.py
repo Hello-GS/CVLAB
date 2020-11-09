@@ -102,6 +102,7 @@ def read_feature(pic_size, label):
             label_list_256.append((cur[0], cur[1]))
         else:
             label_list_32.append((cur[0], cur[1]))
+    file.close()
 
 
 def read_path():
@@ -118,7 +119,7 @@ def match(label_list):
     q = PriorityQueue()
     ans = 99999999999999999
     for label in label_list:
-        if label[0].split("/")[5] == path.split('/')[5]:
+        if label[0].split('/')[5] == path.split('/')[5]:
             continue
         cur_hash = cmpHash(target_hash, label[1][0:-1], ans)
         q.push(label[0], cur_hash)
