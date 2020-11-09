@@ -2,7 +2,6 @@ import configparser
 import cv2
 import numpy as np
 import yagmail
-import heapq
 
 input_path = '/disk/data/total_incident/'
 
@@ -20,12 +19,13 @@ class PriorityQueue:
 
     def __init__(self):
         self._queue = []
-        self._min = 0
+        self._min = 99999999999999999
 
     def push(self, item, priority):
         if self._min > priority:
             self._queue.clear()
             self._queue.append(item)
+            self._min = priority
         if self._min == priority:
             self._queue.append(item)
 
@@ -83,7 +83,7 @@ def cmpHash(hash1, hash2, level):
 def read_config():
     config = configparser.ConfigParser()
     config.read('./config.ini')
-    global user, password, receiver, input_path, output_path_fre, output_path_post, host, pic_length, result_path
+    global user, password, receiver, input_path, output_path_fre, output_path_post, host, result_path
     input_path = config.get('data', 'data_path')
     output_path_fre = config.get('data', 'output_path_fre')
     output_path_post = config.get('data', 'output_path_post')
@@ -91,7 +91,6 @@ def read_config():
     password = config.get('email', 'password')
     receiver = config.get('email', 'receiver').split(',')
     host = config.get('email', 'host')
-    pic_length = int(config.get('data', 'picture_length'))
     result_path = config.get('data', 'result_path')
 
 
@@ -100,9 +99,9 @@ def read_feature(pic_size, label):
     for line in file:
         cur = line.split('\t')
         if pic_size == 256:
-            label_list_256.append((cur[0], cur[1][0:-1]))
+            label_list_256.append((cur[0], cur[1]))
         else:
-            label_list_32.append((cur[0], cur[1][0:-1]))
+            label_list_32.append((cur[0], cur[1]))
 
 
 def read_path():
@@ -136,7 +135,6 @@ def calculate_answer(size, pre_ans):
         if answer > cur_ans:
             answer_path = candidate
             answer = cur_ans
-    print(answer_path)
     return answer_path
 
 
@@ -150,13 +148,11 @@ if __name__ == '__main__':
     print('read feature finish')
     read_path()
     print('read path finish,length =', len(path_list))
-    out = open(result_path, 'r+')
     for t in range(1000):
-        if t != 0 and t % 100 == 0:
-            print(str(t)+'is ok')
-            # send_email('匹配结果完成' + str(t), result_path)
+        if t == 999:
+            send_email('匹配结果完成' + str(t), result_path)
         random = np.random.randint(0, len(path_list) - 1)
         path = path_list[random]
         img = cv2.imread(path)
         target_hash = hashCalculator.aHash(test_pic=img, pic_size=32)
-        out.write(path + ';' + calculate_answer(256, match(label_list_32)))
+        print(path + ';' + calculate_answer(256, match(label_list_32)))
