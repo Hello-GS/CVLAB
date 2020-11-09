@@ -13,24 +13,36 @@ user, password, receiver, host = '', '', [], ''
 pic_length = 256
 
 
+def Hash(test_pic, pic_size, index_set):
+    test_pic = cv2.resize(test_pic, (pic_size, pic_size))
+    gray = cv2.cvtColor(test_pic, cv2.COLOR_BGR2GRAY)
+    hash_str = ''
+    for i in range(pic_size):
+        for j in range(pic_size):
+            if (i, j) in index_set:
+                hash_str += str(int(gray[i, j] / 32))
+    return hash_str
+
+
 class HashCalculator:
-    valid_index = set()
+    valid_index_256 = set()
+    valid_index_32 = set()
 
     def __init__(self):
         for i in range(256):
             for j in range(256):
                 if (128 - i) * (128 - i) + (128 - j) * (128 - j) <= 128 * 128:
-                    self.valid_index.add((i, j))
+                    self.valid_index_256.add((i, j))
+        for i in range(32):
+            for j in range(32):
+                if (16 - i) * (16 - i) + (16 - j) * (16 - j) <= 16 * 16:
+                    self.valid_index_32.add((i, j))
 
-    def aHash(self, img, pic_size):
-        img = cv2.resize(img, (pic_size, pic_size))
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        hash_str = ''
-        for i in range(pic_size):
-            for j in range(pic_size):
-                if (i, j) in self.valid_index:
-                    hash_str += str(int(gray[i, j] / 32))
-        return hash_str
+    def aHash(self, test_pic, pic_size):
+        if pic_size == 32:
+            return Hash(test_pic=test_pic, pic_size=pic_size, index_set=self.valid_index_32)
+        elif pic_size == 256:
+            return Hash(test_pic=test_pic, pic_size=pic_size, index_set=self.valid_index_256)
 
 
 def read_config():
@@ -78,7 +90,7 @@ def write_hash_feature(pic_size, label):
         for graph in graphs:
             abs_path = '/disk/data/total_incident/' + str(label) + '/' + file + '/' + graph
             output_file.write(
-                abs_path + '\t' + hashCalculator.aHash(img=cv2.imread(abs_path), pic_size=pic_length) + '\n')
+                abs_path + '\t' + hashCalculator.aHash(test_pic=cv2.imread(abs_path), pic_size=pic_length) + '\n')
             count += 1
             if count % 1000 == 0:
                 print("has finish" + str(count))
