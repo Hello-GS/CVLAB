@@ -7,8 +7,8 @@ from io import BytesIO
 import yagmail
 
 input_path = ''
-output_path_label0 = ''
-output_path_label1 = ''
+output_path_fre = ''
+output_path_post = ''
 user, password, receiver, host = '', '', [], ''
 pic_length = 256
 
@@ -36,10 +36,10 @@ class HashCalculator:
 def read_config():
     config = configparser.ConfigParser()
     config.read('./config.ini')
-    global user, password, receiver, input_path, output_path_label0, output_path_label1, host, pic_length
+    global user, password, receiver, input_path, output_path_fre, output_path_post, host, pic_length
     input_path = config.get('data', 'data_path')
-    output_path_label0 = config.get('data', 'output_path_label0')
-    output_path_label1 = config.get('data', 'output_path_label1')
+    output_path_fre = config.get('data', 'output_path_fre')
+    output_path_post = config.get('data', 'output_path_post')
     user = config.get('email', 'user')
     password = config.get('email', 'password')
     receiver = config.get('email', 'receiver').split(',')
@@ -66,11 +66,8 @@ def getImageByUrl(url):
     return image
 
 
-def write_hash_feature(label):
-    if label == 0:
-        target_file = output_path_label0
-    else:
-        target_file = output_path_label1
+def write_hash_feature(pic_size, label):
+    target_file = output_path_fre + str(pic_size) + output_path_post + str(label) + '.txt'
     output_file = open(target_file, 'r+')
     all_flies = os.listdir(input_path + str(label) + '/')
     count = 0
@@ -85,13 +82,12 @@ def write_hash_feature(label):
             count += 1
             if count % 1000 == 0:
                 print("has finish" + str(count))
+    send_email('图片大小为' + str(pic_length) + 'ahash值已经计算完成',
+               '对应路径为disk/11712504/fuck/similarity' + target_file)
 
 
 if __name__ == '__main__':
     read_config()
     hashCalculator = HashCalculator()
-    write_hash_feature(0)
-    write_hash_feature(1)
-    send_email('图片大小为' + str(pic_length) + 'ahash值已经计算完成',
-               '对应路径为disk/11712504/fuck/similarity' + output_path_label0 + '\t' +
-               'disk/11712504/fuck/similarity' + output_path_label1)
+    write_hash_feature(pic_size=pic_length, label=0)
+    write_hash_feature(pic_size=pic_length, label=1)

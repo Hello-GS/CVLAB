@@ -2,11 +2,12 @@ import configparser
 import cv2
 import numpy as np
 import yagmail
+import heapq
 
 input_path = '/disk/data/total_incident/'
 
-output_path_label0 = ''
-output_path_label1 = ''
+output_path_fre = ''
+output_path_post = ''
 user, password, receiver, host = '', '', [], ''
 result_photo_name = ''
 label_list_256 = []
@@ -48,10 +49,10 @@ def cmpHash(hash1, hash2, level):
 def read_config():
     config = configparser.ConfigParser()
     config.read('./config.ini')
-    global user, password, receiver, input_path, output_path_label0, output_path_label1, host, pic_length
+    global user, password, receiver, input_path, output_path_fre, output_path_post, host, pic_length
     input_path = config.get('data', 'data_path')
-    output_path_label0 = config.get('data', 'output_path_label0')
-    output_path_label1 = config.get('data', 'output_path_label1')
+    output_path_fre = config.get('data', 'output_path_fre')
+    output_path_post = config.get('data', 'output_path_post')
     user = config.get('email', 'user')
     password = config.get('email', 'password')
     receiver = config.get('email', 'receiver').split(',')
@@ -60,7 +61,7 @@ def read_config():
 
 
 def read_feature(pic_size, label):
-    file = open('output_' + str(pic_size) + '_label' + str(label) + '.txt')
+    file = open('./output_' + str(pic_size) + '_label' + str(label) + '.txt')
     for line in file:
         cur = line.split('\t')
         if pic_size == 256:
@@ -105,13 +106,14 @@ def match(size):
 
 
 hashCalculator = HashCalculator()
-
+pre_ans = []
 if __name__ == '__main__':
     read_config()
     read_feature(pic_size=256, label=0)
-    read_feature(pic_size=256, label=0)
-    read_feature(pic_size=32, label=1)
+    read_feature(pic_size=256, label=1)
+    read_feature(pic_size=32, label=0)
     read_feature(pic_size=32, label=1)
     print('read feature finish')
     read_path()
-    print('#read path finish,length =', len(path_list))
+    print('read path finish,length =', len(path_list))
+
