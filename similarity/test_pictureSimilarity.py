@@ -1,42 +1,31 @@
-def cmpHash(hash1, hash2):
-    n = 0
-    if len(hash1) != len(hash2):
-        return -1
-    for i in range(len(hash1)):
-        n += abs(int(hash1[i]) - int(hash2[i]))
-    return n
+import configparser
+
+import yagmail
+
+user, password, receiver, host, result_path = '', '', '', '', ''
 
 
-import cv2
-import math
+def read_config():
+    config = configparser.ConfigParser()
+    config.read('./config.ini')
+    global user, password, receiver, host, result_path
+
+    user = config.get('email', 'user')
+    password = config.get('email', 'password')
+    receiver = config.get('email', 'receiver').split(',')
+    host = config.get('email', 'host')
+    result_path = config.get('data', 'result_path')
 
 
-def calculate_angle(i, j):
-    x = i - 127
-    y = j - 127
-    return math.acos(x / math.sqrt(x * x + y * y))
+def send_email(title, content):
+    yagmail.SMTP(user=user, password=password, host=host).send(receiver, title, content)
 
 
-def test_cmp_hash():
-    valid = set()
-    n = 0
-    for i in range(256):
-        for j in range(256):
-            if (128 - i) * (128 - i) + (128 - j) * (128 - j) <= 128 * 128:
-                valid.add((i, j))
-    for t in range(100):
-        for i in range(256):
-            for j in range(256):
-                if (i, j) in valid:
-                    n += 1
-    print(n)
+def test_s():
+    read_config()
+    print(result_path.removeprefix('./'))
 
 
-def test_cmp():
-    n = 0
-    for t in range(100):
-        for i in range(256):
-            for j in range(256):
-                if (128 - i) * (128 - i) + (128 - j) * (128 - j) <= 128 * 128:
-                    n += 1
-    print(n)
+def test_send():
+    read_config()
+    send_email('附件形式发送计算结果', result_path[2:])
