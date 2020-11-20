@@ -21,11 +21,6 @@ def find_topk_similar_images(image_name,path,image_path,k=5):
     similarity_incident = event_list[index]
 
 
-
-
-
-
-
     if (os.path.exists(image_path + '/0/' + image_name)):
         img_path = os.listdir(image_path + '/0/' + image_name)
         img = cv2.imread(image_path+ '/0/' + image_name+ '/' + img_path[0])
