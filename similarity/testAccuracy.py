@@ -148,14 +148,14 @@ if __name__ == '__main__':
     print('read feature finish',flush=True)
     read_path()
     print('read path finish,length =', len(path_list))
-    for t in range(1000):
+    for t in range(len(path_list)):
         # if t == 999:
         #     send_email('匹配结果完成' + str(t), result_path.removeprefix('./'))
-        random = np.random.randint(0, len(path_list) - 1)
-        path = path_list[random]
+        #random = np.random.randint(0, len(path_list) - 1)
+        path = path_list[t]
         img = cv2.imread(path)
         target_hash = hashCalculator.aHash(test_pic=img, pic_size=32)
         ans_path = calculate_answer(256, match(label_list_32))
-        if ans_path[4] == '0':
+        if ans_path.split('/')[4] == '0':
             print(path + ';' + ans_path,flush=True)
 
