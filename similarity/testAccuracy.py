@@ -103,13 +103,14 @@ def read_feature(pic_size, label):
 
 
 def read_path():
-    path_file = open('path_test1class.txt')
+    #path_file = open('path_test1class.txt')
+    path_file = open('/disk/11712501/CVLAB/DHash/output_path.txt')
     for line in path_file:
         path_list.append(line[0:-1])
 
 
-def send_email(title, content):
-    yagmail.SMTP(user=user, password=password, host=host).send(receiver, title, content)
+# def send_email(title, content):
+#     yagmail.SMTP(user=user, password=password, host=host).send(receiver, title, content)
 
 
 def match(label_list):
@@ -148,14 +149,23 @@ if __name__ == '__main__':
     print('read feature finish',flush=True)
     read_path()
     print('read path finish,length =', len(path_list))
-    for t in range(len(path_list)):
+    for t in range(1000):
         # if t == 999:
         #     send_email('匹配结果完成' + str(t), result_path.removeprefix('./'))
-        #random = np.random.randint(0, len(path_list) - 1)
-        path = path_list[t]
+        random = np.random.randint(0, len(path_list) - 1)
+        path = path_list[random]
         img = cv2.imread(path)
         target_hash = hashCalculator.aHash(test_pic=img, pic_size=32)
         ans_path = calculate_answer(256, match(label_list_32))
-        if ans_path.split('/')[4] == '0':
-            print(path + ';' + ans_path,flush=True)
+        # if ans_path.split('/')[4] == '0':
+        #     print(path + ';' + ans_path,flush=True)
+
+        img = cv2.resize(img, (512,512))
+        img2 = cv2.imread(ans_path)
+        img2 = cv2.resize(img2,(512,512))
+        newimg = np.hstack([img,img2])
+        newname = '/disk/data/test_ans_photo/'+path.split('.')[0].replace('/','_')+'---'+ans_path.split('.')[0].replace('/','_')+'.jpg'
+
+        cv2.imwrite(newname, newimg)
+        print(t)
 
