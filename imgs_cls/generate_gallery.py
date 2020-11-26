@@ -10,7 +10,7 @@ import torchvision.transforms as transforms
 from PIL import ImageFile
 from imgs_cls.models.model import get_gallery_model,Identity
 from sklearn.model_selection import train_test_split
-from utils.misc import *
+from imgs_cls.utils.misc import *
 from progress.bar import Bar
 from imgs_cls.utils.reader import WeatherDataset, make_weights_for_balanced_classes
 import pandas as pd

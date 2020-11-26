@@ -1,5 +1,5 @@
 from sklearn.metrics import classification_report
-from utils.misc import *
+from imgs_cls.utils.misc import *
 import pandas as pd
 import  numpy as np
 
