@@ -67,7 +67,7 @@ def write_hash_feature(pic_size, label):
             if count % 100 == 0:
                 print("has finish", str(count))
     send_email('图片大小为' + str(pic_length) + 'ahash值已经计算完成',
-               '对应路径为disk/11712504/fuck/similarity' + target_file)
+               '对应路径为' + target_file)
 
 
 if __name__ == '__main__':
