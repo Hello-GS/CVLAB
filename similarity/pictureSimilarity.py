@@ -51,6 +51,7 @@ def cmpHash(hash1, hash2):
 
 def write_hash_feature(pic_size, label):
     target_file = output_path_fre + str(pic_size) + output_path_post + str(label) + '.txt'
+    print(target_file)
     output_file = open(target_file, 'a')
     all_flies = os.listdir(input_path + str(label) + '/')
     count = 0

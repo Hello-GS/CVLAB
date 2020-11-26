@@ -2,7 +2,7 @@ import configparser
 import cv2
 import numpy as np
 import yagmail
-
+from fenjiaodu import angleHashCalculator
 input_path = '/disk/data/total_incident/'
 output_path_fre = ''
 output_path_post = ''
@@ -140,19 +140,24 @@ def calculate_answer(size, pre_ans):
 
 if __name__ == '__main__':
     hashCalculator = HashCalculator()
+    caculater512=angleHashCalculator(512)
     read_config()
-    read_feature(pic_size=256, label=0)
-    read_feature(pic_size=256, label=1)
-    read_feature(pic_size=32, label=0)
-    read_feature(pic_size=32, label=1)
+    # read_feature(pic_size=256, label=0)
+    # read_feature(pic_size=256, label=1)
+    # read_feature(pic_size=32, label=0)
+    # read_feature(pic_size=32, label=1)
+    read_feature(pic_size=512,label=0)
+    read_feature(pic_size=512,label=1)
     print('read feature finish')
     read_path()
     print('read path finish,length =', len(path_list))
     for t in range(1000):
-        if t == 999:
-            send_email('匹配结果完成' + str(t), result_path.removeprefix('./'))
         random = np.random.randint(0, len(path_list) - 1)
         path = path_list[random]
-        img = cv2.imread(path)
-        target_hash = hashCalculator.aHash(test_pic=img, pic_size=32)
+        # img = cv2.imread(path)
+        # target_hash = hashCalculator.aHash(test_pic=img, pic_size=32)
+        target_hash=caculater512.calculateHash(fs=path)
         print(path + ';' + calculate_answer(256, match(label_list_32)))
+        if t == 999:
+            send_email('匹配结果完成' + str(t), result_path.removeprefix('./'))
+
