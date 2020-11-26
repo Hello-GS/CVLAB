@@ -4,8 +4,8 @@ import os
 import cv2
 import yagmail
 
-from CVLAB.similarity.fenjiaodu import angleHashCalculator
-
+# from CVLAB.similarity.fenjiaodu import angleHashCalculator
+from fenjiaodu import angleHashCalculator
 input_path = ''
 output_path_fre = ''
 output_path_post = ''
@@ -49,7 +49,6 @@ def cmpHash(hash1, hash2):
     return n
 
 
-
 def write_hash_feature(pic_size, label):
     target_file = output_path_fre + str(pic_size) + output_path_post + str(label) + '.txt'
     output_file = open(target_file, 'a')
@@ -64,12 +63,10 @@ def write_hash_feature(pic_size, label):
             output_file.write(
                 abs_path + '\t' + hashCalculator.calculateHash(fs=abs_path) + '\n')
             count += 1
-            if count % 1000 == 0:
-                print("has finish" + str(count))
+            if count % 100 == 0:
+                print("has finish", str(count))
     send_email('图片大小为' + str(pic_length) + 'ahash值已经计算完成',
                '对应路径为disk/11712504/fuck/similarity' + target_file)
-
-
 
 
 if __name__ == '__main__':
