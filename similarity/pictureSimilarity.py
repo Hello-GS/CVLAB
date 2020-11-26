@@ -4,7 +4,7 @@ import os
 import cv2
 import yagmail
 
-from similarity.fenjiaodu import angleHashCalculator
+from CVLAB.similarity.fenjiaodu import angleHashCalculator
 
 input_path = ''
 output_path_fre = ''
@@ -52,7 +52,7 @@ def cmpHash(hash1, hash2):
 
 def write_hash_feature(pic_size, label):
     target_file = output_path_fre + str(pic_size) + output_path_post + str(label) + '.txt'
-    output_file = open(target_file, 'r+')
+    output_file = open(target_file, 'a')
     all_flies = os.listdir(input_path + str(label) + '/')
     count = 0
     for file in all_flies:
