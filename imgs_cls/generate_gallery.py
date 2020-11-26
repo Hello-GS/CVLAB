@@ -188,6 +188,7 @@ def main():
         print('==> Resuming from checkpoint..')
         assert os.path.isfile(configs.resume), 'Error: no checkpoint directory found!'
         configs.checkpoint = os.path.dirname(configs.resume)
+        print(configs.checkpoint)
         checkpoint = torch.load(configs.resume)["state_dict"]
 
         trained_list = list(checkpoint.keys())

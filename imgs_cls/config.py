@@ -7,7 +7,11 @@ class DefaultConfigs(object):
     mom = 0.9             # momentum parameters
     wd = 1e-4             # weight-decays
     val_resume = None
-    resume = '/home/majian/codes/project/cme/imgs_cls/checkpoints/fuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian-checkpoint.pth.tar'
+
+    resume ='/disk/11712511/tyfb/checkpoints/fuxian/inceptionv4-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_mymean_cropfuxian/inceptionv4-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_mymean_cropfuxian-checkpoint.pth.tar'
+    #resume = '/home/majian/codes/project/cme/imgs_cls/checkpoints/fuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian-checkpoint.pth.tar'
+
+
     evaluate = False     # just do evaluate
     start_epoch = 0       # deault start epoch is zero,if use resume change it
     split_online = False  # split dataset to train and val online or offline
@@ -30,7 +34,7 @@ class DefaultConfigs(object):
     log_dir = "./logs/resnet34"                   # path to save log files
     # log_dir = "./logs/resnext101_32x4d"
     submits = "./submits"                # path to saves submission files
-    bs = 64              # batch size
+    bs = 32              # batch size
     lr = 1e-2             # learning rate
     epochs = 25           # train epochs
     input_size = (512, 512)      # model input size or image resied
