@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="10.20.53.142" id="b86020b2-00b0-4bf2-aa22-dda6d4d1421b" port="22" nameFormat="DESCRIPTIVE" username="xiaoxiaoyu" />
+      <sshConfig authType="PASSWORD" host="10.20.58.54" id="0ecf5f1e-5711-4779-842b-61c3a66b8d38" port="22" customName="10.20.58.54" nameFormat="CUSTOM" username="xiaoxiaoyu">
+        <option name="customName" value="10.20.58.54" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" host="10.20.58.54" id="c9e8058b-838e-47d1-8123-81e817570498" port="22" customName="10.20.58.54" nameFormat="CUSTOM" username="xiaoxiaoyu">
+        <option name="customName" value="10.20.58.54" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" host="10.20.58.54" id="1c3f1bbc-b7a1-4f83-a0ce-2566faeda8f9" port="22" customName="10.20.58.54" nameFormat="CUSTOM" username="xiaoxiaoyu">
+        <option name="customName" value="10.20.58.54" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" host="10.20.58.54" id="edea7a4c-07f8-4fe8-bdce-0b2aad53a311" port="22" customName="10.20.58.54" nameFormat="CUSTOM">
+        <option name="customName" value="10.20.58.54" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>
