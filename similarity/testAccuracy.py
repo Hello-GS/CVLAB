@@ -103,7 +103,7 @@ def read_feature(pic_size, label):
 
 
 def read_path():
-    path_file = open('../DHash/output_path.txt')
+    path_file = open('/disk/11712501/CVLAB/DHash/output_path.txt')
     for line in path_file:
         path_list.append(line[0:-1])
 
@@ -148,16 +148,16 @@ if __name__ == '__main__':
     # read_feature(pic_size=32, label=1)
     read_feature(pic_size=512,label=0)
     read_feature(pic_size=512,label=1)
-    print('read feature finish')
+    print('read feature finish',flush=True)
     read_path()
-    print('read path finish,length =', len(path_list))
-    for t in range(1000):
+    print('read path finish,length =', len(path_list),flush=True)
+    for t in range(500):
         random = np.random.randint(0, len(path_list) - 1)
         path = path_list[random]
         # img = cv2.imread(path)
         # target_hash = hashCalculator.aHash(test_pic=img, pic_size=32)
         target_hash=caculater512.calculateHash(fs=path)
-        print(path + ';' + calculate_answer(256, match(label_list_32)))
+        print(path + ';' + calculate_answer(256, match(label_list_32)),flush=True)
         if t == 999:
             send_email('匹配结果完成' + str(t), result_path.removeprefix('./'))
 
