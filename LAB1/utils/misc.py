@@ -109,6 +109,8 @@ def get_files(root,mode):
         print("loading train dataset")
         for file in tqdm(all_images):
             all_data_path.append(file)
+            print("gdfgd")
+            print(file.split(os.sep)[-2])
             labels.append(int(file.split(os.sep)[-2]))
         all_files = pd.DataFrame({"filename": all_data_path, "label": labels})
         return all_files

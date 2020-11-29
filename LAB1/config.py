@@ -23,8 +23,8 @@ class DefaultConfigs(object):
     # dataset = "/data/majian/cme/ori_total_incident_split"
     # dataset = "/data/majian/cme/total_incident_cropped_diff_to_frame"
 
-    dataset = "/disk/11711603/LAB/LAB1/data/newtest"
-    test_folder = "/disk/11711603/LAB/LAB1/data/newtest"
+    dataset = "/disk/11712511/tyfb/data/dataset"
+    test_folder = "/disk/11712511/tyfb/data/dataset/test"
     submit_example = "/home/majian/codes/project/cme/img_cls_add_triplet/data/cme_by_incident_cropped_split_label_list.csv"
 
     # dataset = "/data/majian/cme/ori_total_incident_split"
@@ -43,7 +43,7 @@ class DefaultConfigs(object):
     log_dir = "./logs/fuxian"                   # path to save log files
     # log_dir = "./logs/resnext101_32x4d"
     submits = "./submits/"                # path to save submission files
-    bs = 32  #64 begin               # batch size
+    bs = 64  #64 begin               # batch size
     lr = 1e-2             # learning rate
     epochs = 40           # train epochs
     input_size = (512, 512)      # model input size or image resied

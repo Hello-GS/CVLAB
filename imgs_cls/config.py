@@ -21,7 +21,7 @@ class DefaultConfigs(object):
     # dataset = "/data/majian/sunstorm/solar_flare/even_train"
 
     #dataset = "/data/majian/cme/cme_by_incident_cropped_split"
-    dataset = '/disk/11712511/tyfb/data/dataset'
+    dataset = '/disk/event_dataset/dataset'
 
     #dataset = "/data/majian/cme/total_incident_diff_to_frame"
     #dataset = "/data/majian/cme/ori_total_incident_split"
@@ -34,13 +34,13 @@ class DefaultConfigs(object):
     log_dir = "./logs/resnet34"                   # path to save log files
     # log_dir = "./logs/resnext101_32x4d"
     submits = "./submits"                # path to saves submission files
-    bs = 32              # batch size
+    bs = 64              # batch size
     lr = 1e-2             # learning rate
     epochs = 25           # train epochs
     input_size = (512, 512)      # model input size or image resied
     num_classes = 2       # num of classes
     dropout = 0
-    gpu_id = "2"          # default gpu id
+    gpu_id = "1"          # default gpu id
     # model_name = "dconvresnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_imgnetmean_cropdiff"
     #model_name = "resnet34-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_ownmean"         # model name to use # onlykeyframe
     model_name = 'resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian'

@@ -33,11 +33,13 @@ if configs.fp16:
     except ImportError:
         raise ImportError("Please install apex from https://www.github.com/nvidia/apex to run this example.")
 
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 warnings.filterwarnings("ignore")
 os.environ['CUDA_VISIBLE_DEVICES'] = configs.gpu_id
 
-
+import keras
+import tensorflow as tf
 # set random seed
 def seed_everything(seed):
     random.seed(seed)
@@ -394,4 +396,5 @@ def validate(val_loader, model, criterion, epoch):
 
 
 if __name__ == '__main__':
+    torch.backends.cudnn.benchmark = True
     main()
