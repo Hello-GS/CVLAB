@@ -8,7 +8,7 @@ class DefaultConfigs(object):
     wd = 1e-4             # weight-decays
     val_resume = None
 
-    resume ='/disk/11712511/tyfb/checkpoints/fuxian/inceptionv4-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_mymean_cropfuxian/inceptionv4-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_mymean_cropfuxian-checkpoint.pth.tar'
+    resume ='/disk/11711603/LAB/imgs_cls/checkpoints/resnet50/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian-checkpoint.pth.tar'
     #resume = '/home/majian/codes/project/cme/imgs_cls/checkpoints/fuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian/resnet50-model-sgd_bs64_lr_1e-2_CrossEntropy_resize512x512_liuzhumean_cropedfuxian-checkpoint.pth.tar'
 
 
