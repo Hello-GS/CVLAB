@@ -194,8 +194,23 @@ if __name__ == '__main__':
             hash1 = item1[1][:-1]
 
             event_name1 = image_path1.split('/')[5]
-            if event_name0[3:9] == event_name1[3:9]:
-                continue
+            #add judge 3 day
+            if event_name0[9]=='0':
+                event_name0_day = int(event_name0[10])
+            else:
+                event_name0_day = int(event_name0[9:11])
+
+            if event_name1[9] =='0':
+                event_name1_day = int(event_name1[10])
+            else:
+                event_name1_day = int(event_name1[9:11])
+
+            if abs(event_name1_day-event_name0_day)<3:
+                continue 
+
+            #将一个事件的照片放到一个列表里
+            # if event_name0[3:9] == event_name1[3:9]:
+            #     continue
 
             item_similarity_map[item_list.index(event_name0)][item_list.index(event_name1)][0] += cmpHash(hash0, hash1,
                                                                                                       99999999999999999)
