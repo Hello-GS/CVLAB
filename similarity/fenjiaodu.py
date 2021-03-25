@@ -2,26 +2,12 @@ import math
 
 import cv2
 
-input_path = '/disk/data/total_incident/'
 
 
 class angleHashCalculator():
     pic_length = 512
     list = [[[] for j in range(256)] for i in range(36)]
 
-    def calculate_angle(self, i, j):
-        if i == 0 and j == 0:
-            return 0
-        x = i - self.pic_length / 2 - 1
-        y = j - self.pic_length / 2 - 1
-        if y < 0:
-            return 360 - math.acos(x / math.sqrt(x * x + y * y)) / math.pi * 180
-        elif y == 0:
-            if x > +0:
-                return 0
-            else:
-                return 180
-        return math.acos(x / math.sqrt(x * x + y * y)) / math.pi * 180
 
     def calculate_dest(self, i, j):
         return int(math.sqrt(
